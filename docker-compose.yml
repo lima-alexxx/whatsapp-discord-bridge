@@ -2,6 +2,7 @@ services:
   waha:
     image: devlikeapro/waha
     container_name: waha
+    restart: unless-stopped
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
@@ -9,5 +10,10 @@ services:
     environment:
       - WHATSAPP_HOOK_URL=http://host.docker.internal:8000/webhook
       - WHATSAPP_HOOK_EVENTS=message
+      - WAHA_API_KEY=${WAHA_API_KEY:?Defina WAHA_API_KEY no .env}
+      - WAHA_DASHBOARD_USERNAME=${WAHA_DASHBOARD_USERNAME:?Defina no .env}
+      - WAHA_DASHBOARD_PASSWORD=${WAHA_DASHBOARD_PASSWORD:?Defina no .env}
+      - WHATSAPP_SWAGGER_USERNAME=${WAHA_DASHBOARD_USERNAME}
+      - WHATSAPP_SWAGGER_PASSWORD=${WAHA_DASHBOARD_PASSWORD}
     extra_hosts:
       - "host.docker.internal:host-gateway"
